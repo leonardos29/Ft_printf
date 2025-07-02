@@ -6,7 +6,7 @@
 /*   By: leonasil <leonasil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 01:15:41 by leonardo_ou       #+#    #+#             */
-/*   Updated: 2025/06/23 18:56:15 by leonasil         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:26:19 by leonasil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,20 @@ int	ft_printf(const char *format, ...)
 	int			i;
 	int			size;
 
+	if (!format)
+		return (-1);
 	i = 0;
 	size = 0;
 	va_start (args, format);
-	while (format[i] != '\0')
+	while (format[i])
 	{
-		if (format[i] == '%')
+		if (format[i] == '%' && format[i + 1])
 		{
 			i++;
 			size += fix_format(args, format[i]);
 		}
+		else if (format[i] == '%' && !format[i + 1])
+			return (-1);
 		else
 			size += ft_putchar(format[i]);
 		i++;
